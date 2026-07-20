@@ -15,7 +15,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session, joinedload
 
 from ..database import get_db
-from ..models import Assessment
+from ..models import Assessment,Prediction
 from .pdf_builder import build_report_pdf
 
 router = APIRouter(prefix="/reports", tags=["reports"])
@@ -29,7 +29,7 @@ def get_report(assessment_id: int, db: Session = Depends(get_db)):
             joinedload(Assessment.patient),
             joinedload(Assessment.lab_result),
             joinedload(Assessment.lifestyle),
-            joinedload(Assessment.prediction).joinedload("recommendations"),
+            joinedload(Assessment.prediction).joinedload(Prediction.recommendations),
         )
         .filter(Assessment.id == assessment_id)
         .first()
