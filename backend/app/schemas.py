@@ -57,7 +57,6 @@ class RecommendationOut(BaseModel):
     class Config:
         from_attributes = True
 
-
 class PredictionResult(BaseModel):
     assessment_id: int
     model_used: str
@@ -69,3 +68,34 @@ class PredictionResult(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class AnalyticsSummary(BaseModel):
+    total_patients: int
+    total_assessments: int
+    total_predictions: int
+    average_risk_probability: float
+
+
+class RiskDistributionItem(BaseModel):
+    risk_level: str
+    count: int
+    percentage: float
+
+
+class GenderDistributionItem(BaseModel):
+    gender: str
+    count: int
+    percentage: float
+
+
+class BpCategoryDistributionItem(BaseModel):
+    bp_category: str
+    count: int
+    percentage: float
+
+
+class TrendPoint(BaseModel):
+    date: str
+    assessment_count: int
+    average_risk_probability: Optional[float] = None
